@@ -12,14 +12,15 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v1
-    - name: Generate distribution zip and submit to official kodi repository
+    - if: false == contains(github.ref, '-beta')
+      name: Generate distribution zip and submit to official kodi repository
       id: kodi-addon-submitter
       uses: xbmc/action-kodi-addon-submitter@v1.1
       with: # Replace all the below values
         kodi-repository: repo-plugins
-        kodi-version: krypton
+        kodi-version: matrix
         addon-id: plugin.video.videomediaset
-        kodi-matrix: true # Submit a Python 2/3 compatible addon to matrix branch in addition to the target branch
+        kodi-matrix: false # Submit a Python 2/3 compatible addon to matrix branch in addition to the target branch
       env: # Make sure you create the below secrets (GH_TOKEN and EMAIL)
         GH_USERNAME: ${{ github.actor }}
         GH_TOKEN: ${{secrets.GH_TOKEN}}
@@ -33,7 +34,7 @@ jobs:
         GITHUB_TOKEN: ${{secrets.GH_TOKEN}}
       with:
         tag_name: ${{ github.ref }}
-        release_name: Release ${{ github.ref }}
+        release_name: ${{ github.ref }}
         draft: false
         prerelease: false
     - name: Upload Addon zip to github release

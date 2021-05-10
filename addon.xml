@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="plugin.video.videomediaset" name="Mediaset Play" provider-name="phate89, aracnoz" version="2.0.4">
+<addon id="plugin.video.videomediaset" name="Mediaset Play Infinity" provider-name="phate89, aracnoz" version="2.0.8+matrix.1~beta1">
     <requires>
-        <import addon="xbmc.python" version="2.25.0" />
-        <import addon="script.module.phate89" version="1.2.1"/>
+        <import addon="xbmc.python" version="3.0.0" />
+        <import addon="script.module.phate89" version="1.2.1+matrix.1"/>
         <import addon="script.module.inputstreamhelper" version="0.0.1"/>
     </requires>
     <extension library="default.py" point="xbmc.python.pluginsource">
@@ -19,9 +19,8 @@
         <forum>https://forum.kodi.tv/showthread.php?tid=292876</forum>
         <source>https://github.com/phate89/plugin.video.videomediaset</source>
         <reuselanguageinvoker>true</reuselanguageinvoker>
-        <news>2.0.4
-- fixed loading of live channels and tv guide for a missing property (thx to madpilot78)
-- removed workaround that created problems with loading seasons in shows like striscia
+        <news>2.0.8
+- added option to order like mediaset website
         </news>
         <assets>
             <icon>resources/icon.png</icon>

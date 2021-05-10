@@ -74,7 +74,7 @@ class KodiMediaset(object):
 
     def root(self):
         # kodiutils.addListItem(kodiutils.LANGUAGE(32101), {'mode': 'tutto'})
-        # kodiutils.addListItem(kodiutils.LANGUAGE(32106), {'mode': 'programmi'})
+        kodiutils.addListItem(kodiutils.LANGUAGE(32106), {'mode': 'programmi'})
         kodiutils.addListItem(kodiutils.LANGUAGE(32102), {'mode': 'fiction'})
         kodiutils.addListItem(kodiutils.LANGUAGE(32103), {'mode': 'film'})
         kodiutils.addListItem(kodiutils.LANGUAGE(32104), {'mode': 'kids'})
@@ -151,8 +151,12 @@ class KodiMediaset(object):
         kodiutils.endScript()
 
     def elenco_programmi_root(self):
-        kodiutils.addListItem(kodiutils.LANGUAGE(32121), {'mode': 'programmi', 'all': 'true'})
-        kodiutils.addListItem(kodiutils.LANGUAGE(32122), {'mode': 'programmi', 'all': 'false'})
+        # kodiutils.addListItem(kodiutils.LANGUAGE(32121), {'mode': 'programmi', 'all': 'true'})
+        # kodiutils.addListItem(kodiutils.LANGUAGE(32122), {'mode': 'programmi', 'all': 'false'})
+        for sec in self.med.OttieniCategorieProgrammi():
+            if ("uxReference" not in sec):
+                continue
+            kodiutils.addListItem(sec["title"], {'mode': 'sezione', 'id': sec['uxReference']})
         kodiutils.endScript()
 
     def elenco_programmi_tutti(self, inonda, page=None):
@@ -275,8 +279,12 @@ class KodiMediaset(object):
         kodiutils.endScript()
 
     def elenco_video_list(self, subBrandId, start):
+        if (kodiutils.getSettingAsBool('sortmediaset')):
+            sort = 'mediasetprogram$publishInfo_lastPublished|desc'
+        else:
+            sort = 'mediasetprogram$publishInfo_lastPublished'
         els = self.med.OttieniVideoSezione(
-            subBrandId, sort='mediasetprogram$publishInfo_lastPublished', range=self.__imposta_range(start))
+            subBrandId, sort=sort, erange=self.__imposta_range(start))
         self.__analizza_elenco(els, True)
         if len(els) == self.iperpage:
             kodiutils.addListItem(kodiutils.LANGUAGE(32130),
